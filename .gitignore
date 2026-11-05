@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# 本地凭证与运行状态，绝不入库
+config.json
+token.txt
+client-info.json
+state.json
+snapshots.jsonl
+data/
