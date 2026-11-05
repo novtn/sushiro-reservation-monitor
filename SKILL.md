@@ -35,7 +35,7 @@ SUSHIRO_HOME=<项目目录> uv run --project <SKILL_DIR> sushiro slots --store 3
 | `cities` | + `sign_key` |
 | `login` | + `sign_key`、`aes_key`、`aes_iv`（仅探测用） |
 
-密钥是逆向常量，不随本仓库分发。取值：解包自己手机上的寿司郎小程序，在 `app-service.js` 里找 HMAC 密钥（64 字节字符串）与 AES key/iv。抓包抓不到——它们只在客户端本地参与计算，网络上看不到。
+密钥是逆向常量，**本仓库不提供，必须自己填**（`config.example.json` 是空模板）。取值：解包自己手机上的寿司郎小程序，在 `app-service.js` 里找 HMAC 密钥（64 字节字符串）与 AES key/iv。抓包抓不到——它们只在客户端本地参与计算，网络上看不到。
 
 配置方式二选一：
 
@@ -50,6 +50,8 @@ export SUSHIRO_AES_IV=<16字节>
 ```
 
 写进数据目录的 `config.json`。`sushiro config` 会显示 `sign_key: True/False`、`aes_keys: True/False`。
+
+不填的后果：`cities` 报 `缺少 sign_key，签名请求需要它`，`login` 报缺 aes；`stores` / `store` / `slots` 不受影响。
 
 ## 命令
 

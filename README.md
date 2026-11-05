@@ -12,7 +12,9 @@
 git clone <REPO_URL> ~/.dsh/skills/sushiro
 ```
 
-`SKILL.md` 是给 agent 读的说明，`stores.csv` 是随包的门店清单快照（159 家）。
+`SKILL.md` 是给 agent 读的说明，`stores.csv` 是随包的门店清单快照（159 家），`config.example.json` 是待填的配置模板。
+
+两样东西要你自己准备：抓一次 `auth_token`（见下文「先准备 token」，不抓连门店都查不了）；签名密钥只有 `cities` 和 `login` 用得上，见「签名密钥」，**不填也能查余位**。
 
 ## 或者当普通 CLI 用
 
@@ -66,19 +68,27 @@ $ uv run --project . sushiro slots --store 3025 --days 2
 
 ## 签名密钥（只有 cities / login 用）
 
-**查余位不需要密钥**。`stores`、`store`、`slots` 只认 token，拿到 token 就能跑。
+**查余位不需要密钥**。`stores`、`store`、`slots` 只认 token，拿到 token 就能跑，不填任何密钥也正常。
 
-只有 `cities` 和 `login` 要签名，而签名密钥是逆向得来的常量，不放在这个仓库里。要的话自己解包手机上的小程序，在 `app-service.js` 里找 HMAC 密钥（64 字节）和 AES key/iv；抓包拿不到，它们只在客户端本地参与计算。
+只有 `cities` 和 `login` 要签名，而签名密钥是逆向得来的常量，**本仓库不提供，要自己填**：
 
-```bash
-export SUSHIRO_SIGN_KEY=<64字节>
-export SUSHIRO_AES_KEY=<32字节>
-export SUSHIRO_AES_IV=<16字节>
+1. 解包你自己手机上的小程序，在 `app-service.js` 里找 HMAC 密钥（64 字节字符串）、AES key（32 字节）和 iv（16 字节）。抓包拿不到，它们只在客户端本地参与计算。
+2. 复制本目录的 `config.example.json` 为 `config.json`（放进数据目录），填上三个空位：
+
+```json
+{
+  "auth_token": "<抓包得到的 JWT>",
+  "sign_key": "<64 字节>",
+  "aes_key": "<32 字节>",
+  "aes_iv": "<16 字节>"
+}
 ```
 
-或者写进数据目录的 `config.json`（字段名 `sign_key` / `aes_key` / `aes_iv`）。`sushiro config` 显示当前是否配齐。
+或走环境变量：`SUSHIRO_SIGN_KEY` / `SUSHIRO_AES_KEY` / `SUSHIRO_AES_IV`。
 
-顺便一提：实测服务端**并不校验** `X-App-Code` 头——带、不带、乱填都一样返回 200，所以 AES 那两个值只影响 `login` 的协议完整性。
+不填的后果：`cities` 报 `缺少 sign_key，签名请求需要它`，`login` 报缺 aes，其余命令照常。`sushiro config` 显示当前是否配齐。
+
+顺便一提：实测服务端**并不校验** `X-App-Code` 头。带、不带、乱填都一样返回 200，所以 AES 那两个值只影响 `login` 的协议完整性。
 
 ## 环境
 

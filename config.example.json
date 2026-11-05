@@ -1,0 +1,11 @@
+{
+  "_comment": "复制为 config.json 后填写。sign_key / aes_key / aes_iv 必须从你自己解包的小程序里取，仓库不提供（见 README 的「签名密钥」）。",
+  "auth_token": "",
+  "sign_key": "",
+  "aes_key": "",
+  "aes_iv": "",
+  "store_id": "3026",
+  "numpersons": 2,
+  "table_type": "T",
+  "app_version": "1.1.28"
+}
