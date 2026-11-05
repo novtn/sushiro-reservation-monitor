@@ -9,7 +9,7 @@
 把整个目录放进你的 skills 目录，例如：
 
 ```bash
-git clone <REPO_URL> ~/.dsh/skills/sushiro
+git clone https://github.com/novtn/sushiro-reservation-monitor.git ~/.dsh/skills/sushiro
 ```
 
 `SKILL.md` 是给 agent 读的说明，`stores.csv` 是随包的门店清单快照（159 家），`config.example.json` 是待填的配置模板。
