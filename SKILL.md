@@ -117,7 +117,7 @@ SUSHIRO_TOKEN=<jwt> uv run --project <SKILL_DIR> sushiro slots --store 3025
 ## 约束
 
 - `js_code` 由微信签发、一次性、5 分钟有效，无法离线生成；不要尝试伪造 token，服务端密钥不在客户端包内。
-- 只实现 5 个官方文档端点（`citys`、`initialize`、`stores`、`getStoreById`、`store/timeslots`）。其余 45 个未文档化端点不在范围内。
+- 只实现 5 个端点（`citys`、`initialize`、`stores`、`getStoreById`、`store/timeslots`）。其余接口不在范围内，不要绕过 CLI 直接打别的路径。
 - 限流 60 次/分钟，客户端已内置 0.3s 间隔与 429 退避。
 - 门店 ID 在 `stores` 响应里叫 `id`，在 `timeslots` 响应里叫 `storeId`。
 - 时段字段：`date=20261105`、`start=111500`、`availability=AVAILABLE|UNAVAILABLE`；CLI 已转成 `2026-11-05` / `11:15`。

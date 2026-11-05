@@ -96,7 +96,7 @@ $ uv run --project . sushiro slots --store 3025 --days 2
 
 ## 边界
 
-只实现了官方 OpenAPI 文档里的 5 个端点：`citys`、`initialize`、`stores`、`getStoreById`、`store/timeslots`。小程序里另有约 45 个未文档化接口（点餐、优惠券、订单等），这里一个都没实现。
+只实现了官方 API 的 5 个端点：`citys`、`initialize`、`stores`、`getStoreById`、`store/timeslots`。
 
 `js_code` 由微信签发、一次性、5 分钟有效，无法离线生成；JWT 也没法伪造——服务端密钥不在客户端包里。所以 token 只能抓，不能造。
 
